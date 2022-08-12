@@ -22,8 +22,11 @@ public class OpenQuestionDAO {
         try {
             Connection con = connect();
             java.sql.Statement stmt = con.createStatement();
-            String query = "INSERT INTO open_questions (sno,topic,question,answer) VALUES ("+id+",'"+topic+"','"+title+"','"+answer+"')";
-            stmt.executeUpdate(query);
+            //if no table exists, create table
+            String createQuery = "CREATE TABLE IF NOT EXISTS open_questions (sno Varchar(255) PRIMARY KEY, topic VARCHAR(255), question VARCHAR(255), answer VARCHAR(255))";
+            stmt.executeUpdate(createQuery);
+            String insertQuery = "INSERT INTO open_questions (sno,topic,question,answer) VALUES ("+id+",'"+topic+"','"+title+"','"+answer+"')";
+            stmt.executeUpdate(insertQuery);
             System.out.println("Question Created successfully");
         } catch (SQLException e) {
             e.printStackTrace();

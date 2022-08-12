@@ -48,8 +48,12 @@ public class Launcher {
                     QuizEvaluation quizEvaluation = new QuizEvaluation();
                     int score = 0;
                     int position = 0;
-                    File file = new File("D://Code2.txt");
-                    FileOutputStream outputStream = new FileOutputStream(file);
+                    //getting file path from the user and write the questions to the file
+                    System.out.println("Enter the file path to write the questions in text file(path format be) : ");
+                    String filePath = scan.nextLine();
+                    File file = new File(filePath);
+                    //File file = new File("D://Code2.txt"); //file name is hardcoded
+                    FileOutputStream outputStream = new FileOutputStream(file); //
                     PrintWriter pw = new PrintWriter(outputStream);
                     pw.println("Quiz Type: " + quizType + "QUESTIONS");
                     for (Question question : questions) {

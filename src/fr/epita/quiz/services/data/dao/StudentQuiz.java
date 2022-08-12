@@ -29,8 +29,8 @@ public class StudentQuiz {
     public int getTotalQuestionsCountFromStudent(Scanner scanner) {
         //scanner to get the total questions count from the student
         System.out.println("Please enter the total questions count: ");
-        int totalQuestionsCount = scanner.nextInt();
-        return totalQuestionsCount;
+        String totalQuestionsCount = scanner.nextLine();
+        return Integer.parseInt(totalQuestionsCount);
     }
     public ArrayList<String> getAllTopicsFromStudent(Scanner scanner) {
         //scanner to get the topics from the student

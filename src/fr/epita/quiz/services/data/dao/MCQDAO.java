@@ -30,6 +30,9 @@ public class MCQDAO {
         try {
             Connection con = connect();
             java.sql.Statement stmt = con.createStatement();
+            //if no table exists, create table
+            String createQuery = "CREATE TABLE IF NOT EXISTS quiz (sno VARCHAR(255) PRIMARY KEY, topic VARCHAR(255), question VARCHAR(255), answer VARCHAR(255), choice1 VARCHAR(255), choice2 VARCHAR(255), choice3 VARCHAR(255))";
+            stmt.executeUpdate(createQuery);
             String query = "INSERT INTO quiz (sno,topic,question,answer,choices_1,choices_2,choices_3) VALUES ("+id+",'"+topic+"','"+title+"','"+answer+"','"+choices_1+"','"+choices_2+"','"+choices_3+"')";
             stmt.executeUpdate(query);
             System.out.println("Question created successfully");

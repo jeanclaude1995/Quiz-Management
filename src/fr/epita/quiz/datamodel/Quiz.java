@@ -11,12 +11,12 @@ public class Quiz {
     String[] topics = null;
     Integer numberOfQuestions = null;
 
-    public ArrayList<Question> getQuestions( String quizeType,List<String> topics, int numberOfQuestions) throws SQLException {
+    public ArrayList<Question> getQuestions( String quizType,List<String> topics, int numberOfQuestions) throws SQLException {
         QuestionGenerator questionGenerator = new QuestionGenerator();
         int QuestionPerTopic = numberOfQuestions / topics.size();
         ArrayList<Question> result = new ArrayList();
         for (String topic : topics) {
-            result.addAll(questionGenerator.getallQuestions(quizeType,topic, QuestionPerTopic));
+            result.addAll(questionGenerator.getallQuestions(quizType,topic, QuestionPerTopic));
         }
         return result;
     }

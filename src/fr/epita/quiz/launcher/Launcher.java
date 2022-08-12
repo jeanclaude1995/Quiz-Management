@@ -27,7 +27,7 @@ public class Launcher {
             System.out.println("3. Update");
             System.out.println("4. Delete");
             System.out.println("5. Exit");
-            System.out.println("Enter your choice");
+            System.out.print("Enter your choice");
             String choice = scan.nextLine();
             int choiceInt = Integer.parseInt(choice);
             //int choiceInt = 3;
@@ -42,14 +42,14 @@ public class Launcher {
                     }
                     break;
                 case 2:
-                    ArrayList<String> topics = studentQuiz.getAllTopicsFromStudent(scan);
+                    ArrayList<String> topics = studentQuiz.getAllTopicsFromStudent(quizType,scan);
                     int numberOfQuestions = studentQuiz.getTotalQuestionsCountFromStudent(scan);
                     ArrayList<Question> questions = questionGenerator.getQuestions(quizType, topics, numberOfQuestions);
                     QuizEvaluation quizEvaluation = new QuizEvaluation();
-                    int score = 0;
-                    int position = 0;
+                    Integer score = 0;
+                    Integer position = 0;
                     //getting file path from the user and write the questions to the file
-                    System.out.println("Enter the file path to write the questions in text file(path format be) : ");
+                    System.out.print("Enter the file path to write the questions in text file(sample: D://Code2.txt) : ");
                     String filePath = scan.nextLine();
                     File file = new File(filePath);
                     //File file = new File("D://Code2.txt"); //file name is hardcoded

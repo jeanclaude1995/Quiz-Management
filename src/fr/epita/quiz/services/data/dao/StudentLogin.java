@@ -20,9 +20,9 @@ public class StudentLogin {
         String defaultUserName = properties.getProperty("userName");
         String defaultPassword = properties.getProperty("password");
 
-        System.out.println("Welcome, please enter your name: ");
+        System.out.print("Welcome, please enter your name: ");
         String userName = scanner.nextLine();
-        System.out.println("please enter your password: ");
+        System.out.print("please enter your password: ");
         String password = scanner.nextLine();
 
         boolean authenticated = userName.equals(defaultUserName)

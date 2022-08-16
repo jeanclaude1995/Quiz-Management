@@ -15,15 +15,15 @@ public class Launcher {
         System.out.println("2. Student");
         System.out.println("3. exit");
         System.out.print("Enter your choice: ");
-        Scanner scan = new Scanner(System.in);
-        String choice = scan.nextLine();
+        Scanner scan = new Scanner(System.in);//scanner for user input
+        String choice = scan.nextLine();//user input
         switch (choice) {
-            case "1":
-                boolean isAdminValid = new AdminLogin().getAdminData(scan);
+            case "1"://admin
+                boolean isAdminValid = new AdminLogin().getAdminData(scan);//admin login
                 if (isAdminValid) {
                     StudentQuiz studentQuiz = new StudentQuiz();
                     Quiz questionGenerator = new Quiz();
-                    String quizType = studentQuiz.getQuizTypeFromStudent(scan);
+                    String quizType = studentQuiz.getQuizTypeFromStudent(scan);//get quiz type from ADMIN
                     //String quizType = "Open";
                     if (quizType != null) {
                         //CRUD operations for quiz table
@@ -40,7 +40,7 @@ public class Launcher {
                             ch = scan.nextLine();
                             int choiceInt = Integer.parseInt(ch);
                             switch (choiceInt) {
-                                case 1:
+                                case 1://create question
                                     if (quizType.equals("MCQ")) {
                                         MCQDAO mcqDAO = new MCQDAO();
                                         mcqDAO.create(scan);
@@ -49,7 +49,7 @@ public class Launcher {
                                         openQuestionDAO.create(scan);
                                     }
                                     break;
-                                case 2:
+                                case 2://demo quiz
                                     ArrayList<String> topics = studentQuiz.getAllTopicsFromStudent(quizType, scan);
                                     int numberOfQuestions = studentQuiz.getTotalQuestionsCountFromStudent(scan);
                                     ArrayList<Question> questions = questionGenerator.getQuestions(quizType, topics, numberOfQuestions);
@@ -60,14 +60,13 @@ public class Launcher {
                                     System.out.print("Enter the file path to write the questions in text file(sample: D://Code2.txt) : ");
                                     String filePath = scan.nextLine();
                                     File file = new File(filePath);
-                                    //File file = new File("D://Code2.txt"); //file name is hardcoded
-                                    FileOutputStream outputStream = new FileOutputStream(file); //
+                                    FileOutputStream outputStream = new FileOutputStream(file); //file output stream
                                     PrintWriter pw = new PrintWriter(outputStream);
                                     pw.println("Quiz Type: " + quizType + "QUESTIONS");
-                                    for (Question question : questions) {
+                                    for (Question question : questions) {//Iterate through arraylist of questions
                                         position++;
                                         pw.println(position + ". " + question.getTitle());
-                                        boolean isCorrect = quizEvaluation.displayAndGetAnswer(pw, position, question);
+                                        boolean isCorrect = quizEvaluation.displayAndGetAnswer(pw, position, question);//display question and get boolean answer
 
                                         if (isCorrect) score++;
                                     }
@@ -75,7 +74,7 @@ public class Launcher {
                                     pw.close();
                                     System.out.println("Your score is: " + score);
                                     break;
-                                case 3:
+                                case 3://update question
                                     if (quizType.equals("MCQ")) {
                                         MCQDAO mcqDAO = new MCQDAO();
                                         mcqDAO.update(scan);
@@ -84,7 +83,7 @@ public class Launcher {
                                         openQuestionDAO.update(scan);
                                     }
                                     break;
-                                case 4:
+                                case 4://delete question
                                     if (quizType.equals("MCQ")) {
                                         MCQDAO mcqDAO = new MCQDAO();
                                         mcqDAO.delete(scan);
@@ -93,8 +92,8 @@ public class Launcher {
                                         openQuestionDAO.delete(scan);
                                     }
                                     break;
-                                case 5:
-                                    ArrayList<String> topics1 = studentQuiz.getAllTopicsFromStudent(quizType, scan);
+                                case 5://search question
+                                    ArrayList<String> topics1 = studentQuiz.getAllTopicsFromStudent(quizType, scan);//get all topics from admin
                                     Integer position2 = 0;
                                     if (quizType.equals("MCQ")) {
                                         MCQDAO mcqDAO = new MCQDAO();
@@ -130,10 +129,10 @@ public class Launcher {
                                         }
                                     }
                                     break;
-                                case 6:
+                                case 6://exit
                                     System.out.println("Exiting");
                                     break;
-                                default:
+                                default://invalid choice
                                     System.out.println("Invalid choice");
                                     break;
                             }
@@ -143,11 +142,11 @@ public class Launcher {
                 }
                     break;
                     case "2":
-                        boolean isStudentValid = new StudentLogin().getStudentData(scan);
+                        boolean isStudentValid = new StudentLogin().getStudentData(scan);//student login validation
                         if (isStudentValid) {
                             StudentQuiz studentQuiz = new StudentQuiz();
                             Quiz questionGenerator = new Quiz();
-                            String quizType = studentQuiz.getQuizTypeFromStudent(scan);
+                            String quizType = studentQuiz.getQuizTypeFromStudent(scan);//get quiz type from student
                             if (quizType != null) {
                                         ArrayList<String> topics = studentQuiz.getAllTopicsFromStudent(quizType, scan);
                                         int numberOfQuestions = studentQuiz.getTotalQuestionsCountFromStudent(scan);
@@ -166,7 +165,7 @@ public class Launcher {
                                         for (Question question : questions) {
                                             position++;
                                             pw.println(position + ". " + question.getTitle());
-                                            boolean isCorrect = quizEvaluation.displayAndGetAnswer(pw, position, question);
+                                            boolean isCorrect = quizEvaluation.displayAndGetAnswer(pw, position, question);//display question and get boolean answer
                                             if (isCorrect) score++;
                                         }
                                         pw.println("\n\nYour Final score is: " + score);

@@ -11,21 +11,21 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class QuizEvaluation {
+public class QuizEvaluation {//evaluate quiz
     public Boolean displayAndGetAnswer(PrintWriter pw,Integer position,Question question) throws IOException, SQLException {
-        if (question instanceof MCQQuestion) {
+        if (question instanceof MCQQuestion) {//if question is MCQ
             System.out.println(position + ") " +question.getTitle());
             //System.out.println(question.getDescription());
             return displayAndGetAnswersForMCQ((MCQQuestion) question,pw);
         }
-        else if(question instanceof OpenQuestion) {
+        else if(question instanceof OpenQuestion) {//if question is open
             System.out.println(position + ") " +question.getTitle());
             //System.out.println(question.getDescription());
             return displayAndGetAnswersForOpen((OpenQuestion) question,pw);
         }
         return null;
     }
-    private Boolean displayAndGetAnswersForMCQ(MCQQuestion mcqQuestion,PrintWriter pw) throws IOException, SQLException {
+    private Boolean displayAndGetAnswersForMCQ(MCQQuestion mcqQuestion,PrintWriter pw) throws IOException, SQLException {//display and get answers for MCQ
         for (Choice choice : mcqQuestion.getChoices()) {
             Integer position = mcqQuestion.getChoices().indexOf(choice)+1;
             System.out.println("  ("+position + ") " + choice.getTitle());
@@ -56,7 +56,7 @@ public class QuizEvaluation {
                 return false;
         }
         }
-    private Boolean displayAndGetAnswersForOpen(OpenQuestion openQuestion,PrintWriter pw) throws IOException {
+    private Boolean displayAndGetAnswersForOpen(OpenQuestion openQuestion,PrintWriter pw) throws IOException {//display and get answers for open question
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your answer: ");
         String answer = scanner.nextLine();
@@ -64,7 +64,7 @@ public class QuizEvaluation {
         pw.println("Correct answer: "+openQuestion.getAnswer());
         return answer.equals(openQuestion.getAnswer());
     }
-    private Connection connect() throws SQLException, IOException {
+    private Connection connect() throws SQLException, IOException {//connect to database
         Properties props = new Properties();
         FileInputStream in = new FileInputStream("./database.properties");
         props.load(in);

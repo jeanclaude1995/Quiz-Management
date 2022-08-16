@@ -26,7 +26,7 @@ public class StudentLogin {
         return true;
     }
 
-    private boolean getStudent(String userName, String password) throws SQLException, FileNotFoundException {
+    private boolean getStudent(String userName, String password) throws SQLException, FileNotFoundException {//check if the userName and password are available in the database
         //authenticate students from student table in the database
         String query = "SELECT * FROM students WHERE name = '" + userName + "' AND id = '" + password + "'";
         Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5433/Demo", "postgres","jean");

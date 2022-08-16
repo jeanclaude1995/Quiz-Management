@@ -13,8 +13,7 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class MCQDAO {
-    //insert MCQ question into the quiz table
-    public void create(Scanner scan) {
+    public void create(Scanner scan) {//insert questions into MCQ question table
         //insert questions into MCQ question table
         System.out.println("Enter question Id");
         String id = scan.nextLine();
@@ -47,7 +46,7 @@ public class MCQDAO {
 
     }
     //update questions in MCQ question table
-    public void update(Scanner scan) {
+    public void update(Scanner scan) {//update questions in MCQ question table
         //update questions in MCQ question table
         System.out.println("Enter question id: ");
         String id = scan.nextLine();
@@ -77,7 +76,7 @@ public class MCQDAO {
         }
     }
     //delete questions from MCQ question table
-    public void delete(Scanner scan) {
+    public void delete(Scanner scan) {//delete questions from MCQ question table
         //delete questions from MCQ question table
         System.out.println("Enter question id");
         String id = scan.nextLine();
@@ -93,7 +92,7 @@ public class MCQDAO {
         }
     }
     //get all questions from MCQ question table
-    public ArrayList<Question> getMCQQuestions(String topic, int qnPerTopic) throws SQLException {
+    public ArrayList<Question> getMCQQuestions(String topic, int qnPerTopic) throws SQLException {//get all questions from MCQ question table
 
         String SQL = "SELECT * FROM mcq where topic ='"+topic+"'order by random() limit "+qnPerTopic;
 
@@ -134,7 +133,7 @@ public class MCQDAO {
 
     }
     //search questions from MCQ question table by topics
-    public ArrayList<Question> searchMCQ(String topic) throws SQLException {
+    public ArrayList<Question> searchMCQ(String topic) throws SQLException {//search questions from MCQ question table by topics
         String SQL = "SELECT * FROM mcq where topic ='"+topic+"'";
         ArrayList<Question> questions = new ArrayList<Question>();    // ArrayList to store questions
         try (Connection conn = connect();
@@ -172,7 +171,7 @@ public class MCQDAO {
         return questions;
     }
 
-    private Connection connect() throws SQLException, IOException {
+    private Connection connect() throws SQLException, IOException {//connect to database
         Properties props = new Properties();
         FileInputStream in = new FileInputStream("./database.properties");
         props.load(in);

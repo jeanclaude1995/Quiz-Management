@@ -118,7 +118,7 @@ public class OpenQuestionDAO {
         }
         return questions;
     }
-    private Connection connect() throws SQLException, IOException {
+    private Connection connect() throws SQLException, IOException {//method to connect to database
         Properties props = new Properties();
         FileInputStream in = new FileInputStream("./database.properties");
         props.load(in);

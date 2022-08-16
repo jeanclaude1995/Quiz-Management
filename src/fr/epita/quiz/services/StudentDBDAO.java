@@ -13,7 +13,7 @@ public class StudentDBDAO {
 
 
 
-    public void create(Student student) throws SQLException, IOException {
+    public void create(Student student) throws SQLException, IOException {//create a student
         Connection connection = getConnection();
 
         String createTableQuery = "CREATE TABLE IF NOT EXISTS STUDENTS(studentId varchar(255), name varchar(255))";
@@ -27,7 +27,7 @@ public class StudentDBDAO {
         System.out.println("Student created successfully");
     }
     //update student in database
-    public void update(Student student) throws SQLException, IOException {
+    public void update(Student student) throws SQLException, IOException {//update a student
         Connection connection = getConnection();
         String updateQuery = "UPDATE STUDENTS SET  id = ? WHERE  name = ? ";
         PreparedStatement ps = connection.prepareStatement(updateQuery);
@@ -38,7 +38,7 @@ public class StudentDBDAO {
         System.out.println("Student updated successfully");
     }
 
-    public void readAll() throws SQLException, IOException {
+    public void readAll() throws SQLException, IOException {//read all students from database
         Connection connection = getConnection();
 
         String sqlQuery = "select * from STUDENTS";
@@ -59,7 +59,7 @@ public class StudentDBDAO {
        }
     }
 
-    public void delete(String  username) throws SQLException, IOException {
+    public void delete(String  username) throws SQLException, IOException {//delete a student from database
         Connection connection = getConnection();
         String sqlQuery = "DELETE FROM STUDENTS WHERE name = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);

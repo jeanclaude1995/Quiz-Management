@@ -27,15 +27,12 @@ public class AdminLogin {
         String password = scanner.nextLine();
 
         boolean authenticated = userName.equals(defaultUserName)
-                && password.equals(defaultPassword);
-        //authenticate students from student table in the database
+                && password.equals(defaultPassword);//check if the userName and password are the same as the default ones
 
-        if (!authenticated) {
-            // we leave
+        if (!authenticated) {//if the authentication failed
             System.out.println("not authenticated, bye!");
             return false;
         }
-
         System.out.println("credentials ok, welcome!");
         String userResponse = "";
         while (!"q".equals(userResponse)) {
@@ -80,17 +77,17 @@ public class AdminLogin {
                     break;
                 case "q":
                     break;
-                 case "e":
+                 case "e"://exit
                      System.out.println("bye!");
                      return false;
-                default:
+                default://if the user response is not one of the above
                     System.out.println("invalid option, retry");
                     break;
             }
         }
         return true;
     }
-        private static Properties getProperties () {
+        private static Properties getProperties () {//get the properties from the file
             Properties properties = new Properties();
             try {
                 properties.load(new FileInputStream("./credentials.properties"));

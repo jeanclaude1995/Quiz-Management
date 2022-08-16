@@ -1,7 +1,7 @@
 package fr.epita.quiz.tests;
 
 import fr.epita.quiz.datamodel.Student;
-import fr.epita.quiz.services.data.dao.StudentCSVDAO;
+import fr.epita.quiz.services.StudentCSVDAO;
 
 import java.io.*;
 import java.nio.file.Files;

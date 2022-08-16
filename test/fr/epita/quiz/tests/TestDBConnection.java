@@ -1,15 +1,22 @@
 package fr.epita.quiz.tests;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
+
+import static java.lang.System.getProperties;
 
 public class TestDBConnection {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
         //testSimpleConnectionAndSelect();
 
         // when
         /*?currentSchema=public to be appended to the connection url to specify the schema*/
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5433/Demo", "postgres","jean");
+
+        Connection connection = connect();
+
 
         String createTableQuery = "CREATE TABLE IF NOT EXISTS STUDENTS( id varchar(30), name varchar(255))";
 
@@ -22,12 +29,12 @@ public class TestDBConnection {
 
     }
 
-    private static void testSimpleConnectionAndSelect() throws SQLException {
+    private static void testSimpleConnectionAndSelect() throws SQLException, IOException {
         //given
 
 
         // when
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5433//Demo", "postgres","jean");
+        Connection connection = connect();
         String schema = connection.getSchema();
         System.out.println(schema);
 
@@ -45,5 +52,16 @@ public class TestDBConnection {
         //cleanup
         connection.close();
     }
+    public static Connection connect() throws IOException, SQLException {
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("./database.properties");
+        props.load(in);
+        in.close();
+        String url = props.getProperty("dbUrl");
+        String user = props.getProperty("dbName");
+        String password = props.getProperty("dbPassword");
+        return DriverManager.getConnection(url,user,password);
+    }
+
 }
 

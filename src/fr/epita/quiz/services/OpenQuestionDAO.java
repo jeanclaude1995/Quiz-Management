@@ -1,10 +1,13 @@
-package fr.epita.quiz.services.data.dao;
+package fr.epita.quiz.services;
 
 import fr.epita.quiz.datamodel.OpenQuestion;
 import fr.epita.quiz.datamodel.Question;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class OpenQuestionDAO {
@@ -19,16 +22,18 @@ public class OpenQuestionDAO {
         String title = scan.nextLine();
         System.out.println("Enter question answer");
         String answer = scan.nextLine();
+        System.out.println("Enter Description(1|2|3):");
+        String description = scan.nextLine();
         try {
             Connection con = connect();
             java.sql.Statement stmt = con.createStatement();
             //if no table exists, create table
-            String createQuery = "CREATE TABLE IF NOT EXISTS open_questions (sno Varchar(255) PRIMARY KEY, topic VARCHAR(255), question VARCHAR(255), answer VARCHAR(255))";
+            String createQuery = "CREATE TABLE IF NOT EXISTS open_questions (sno Varchar(255) PRIMARY KEY, topic VARCHAR(255), question VARCHAR(255), answer VARCHAR(255), description VARCHAR(255))";
             stmt.executeUpdate(createQuery);
-            String insertQuery = "INSERT INTO open_questions (sno,topic,question,answer) VALUES ("+id+",'"+topic+"','"+title+"','"+answer+"')";
+            String insertQuery = "INSERT INTO open_questions (sno,topic,question,answer,description) VALUES ("+id+",'"+topic+"','"+title+"','"+answer+"','"+description+"')";
             stmt.executeUpdate(insertQuery);
             System.out.println("Question Created successfully");
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -43,13 +48,15 @@ public class OpenQuestionDAO {
         String title = scan.nextLine();
         System.out.println("Enter question answer");
         String answer = scan.nextLine();
+        System.out.println("Enter Description:");
+        String description = scan.nextLine();
         try {
             Connection con = connect();
             java.sql.Statement stmt = con.createStatement();
-            String query = "UPDATE open_questions SET topic = '"+topic+"', question = '"+title+"', answer = '"+answer+"' WHERE sno = '"+id+"'";
+            String query = "UPDATE open_questions SET topic = '"+topic+"', question = '"+title+"', answer = '"+answer+"',description= '"+description+"' WHERE sno = '"+id+"'";
             stmt.executeUpdate(query);
             System.out.println("Question updated successfully");
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -65,7 +72,7 @@ public class OpenQuestionDAO {
             ps.setString(1, id);
             ps.executeUpdate();
             System.out.println("Question deleted successfully");
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -85,12 +92,40 @@ public class OpenQuestionDAO {
                 question.setAnswer(rs.getString("answer"));
                 questions.add(question);
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | IOException ex) {
             System.out.println(ex.getMessage());
         }
         return questions;
     }
-    public Connection connect() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5433/Demo", "postgres","jean");
+    //search open question in database
+    public ArrayList<Question> searchOpenQuestions(String topic) throws SQLException {
+        String SQL = "SELECT * FROM open_questions where topic ='"+topic+"'";
+        ArrayList<Question> questions = new ArrayList<Question>();    // ArrayList to store questions
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(SQL)) {
+            while (rs.next()) {
+                OpenQuestion question = new OpenQuestion();
+                //question.setDescription(rs.getString("hint"));
+                question.setTitle(rs.getString("Question"));
+                question.setTopic(rs.getString("topic"));
+                question.setAnswer(rs.getString("answer"));
+                question.setDescription(rs.getString("description"));
+                questions.add(question);
+            }
+        } catch (SQLException | IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return questions;
+    }
+    private Connection connect() throws SQLException, IOException {
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("./database.properties");
+        props.load(in);
+        in.close();
+        String url = props.getProperty("dbUrl");
+        String user = props.getProperty("dbName");
+        String password = props.getProperty("dbPassword");
+        return DriverManager.getConnection(url,user,password);
     }
 }

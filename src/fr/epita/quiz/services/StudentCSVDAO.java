@@ -1,4 +1,4 @@
-package fr.epita.quiz.services.data.dao;
+package fr.epita.quiz.services;
 
 import fr.epita.quiz.datamodel.Student;
 

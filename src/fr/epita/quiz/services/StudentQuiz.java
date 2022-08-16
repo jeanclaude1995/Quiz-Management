@@ -1,9 +1,9 @@
-package fr.epita.quiz.services.data.dao;
+package fr.epita.quiz.services;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import fr.epita.quiz.datamodel.Question;
+
+import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +11,8 @@ import java.util.Scanner;
 public class StudentQuiz {
     public String getQuizTypeFromStudent(Scanner scan) {
         //get quiz type from the student
-        System.out.println("a. MCQ \nb. Open \nc. Associative\n");
+        System.out.println("list of quiz types available");
+        System.out.println("a. MCQ \nb. Open \n");
         System.out.print("Enter the quiz type: ");
         String quizType = scan.nextLine();
             switch (quizType) {
@@ -21,9 +22,6 @@ public class StudentQuiz {
                 case "b":
                     System.out.println("You have selected Open Question");
                     return "Open";
-                case "c":
-                    System.out.println("You have selected Associative Question");
-                    return "Associative";
                 default:
                     System.out.println("You have selected wrong quiz type");
                     return null;
@@ -44,7 +42,7 @@ public class StudentQuiz {
             Connection con = connect();
             java.sql.Statement stmt = con.createStatement();
             String openQnTopics = "SELECT DISTINCT  topic FROM open_questions";
-            String mcqQnTopics = "select DISTINCT topic from quiz";
+            String mcqQnTopics = "select DISTINCT topic from mcq";
             if(quizType=="Open"){
                 ResultSet rs = stmt.executeQuery(openQnTopics);
                 //display the Result set

@@ -1,15 +1,11 @@
 package fr.epita.quiz.launcher;
 
-import fr.epita.quiz.datamodel.Choice;
-import fr.epita.quiz.datamodel.MCQQuestion;
-import fr.epita.quiz.datamodel.OpenQuestion;
 import fr.epita.quiz.datamodel.Question;
-import fr.epita.quiz.services.data.dao.MCQDAO;
-import fr.epita.quiz.services.data.dao.OpenQuestionDAO;
+import fr.epita.quiz.services.MCQDAO;
+import fr.epita.quiz.services.OpenQuestionDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class QuestionGenerator {
     public Connection connect() throws SQLException {
